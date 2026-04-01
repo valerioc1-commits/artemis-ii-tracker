@@ -352,6 +352,32 @@
       padding-top: 1rem;
       border-top: 0.5px solid var(--border);
     }
+        /* Highlight the current event */
+    .tl-item.current .tl-title {
+      font-weight: 600;
+      color: var(--blue);
+    }
+    
+    .tl-item.current .tl-dot {
+      box-shadow: 0 0 10px var(--blue), 0 0 20px var(--blue);
+      background: var(--blue);
+    }
+    
+    .tl-item.current .tl-time {
+      color: var(--blue-text);
+      font-weight: 500;
+    }
+    
+    /* Soft pulse for the active event */
+    @keyframes pulseGlow {
+      0%   { box-shadow: 0 0 6px var(--blue); }
+      50%  { box-shadow: 0 0 14px var(--blue); }
+      100% { box-shadow: 0 0 6px var(--blue); }
+    }
+    
+    .tl-item.current .tl-dot {
+      animation: pulseGlow 1.6s infinite;
+    }
   </style>
 </head>
 <body>
@@ -735,7 +761,37 @@
       document.getElementById('dist-bar').style.width = pct + '%';
       document.getElementById('dist-speed').textContent = diff > 0 ? '-- mph' : commas(speed) + ' mph';
     }
-
+    function highlightCurrentEvent(now) {
+      const items = document.querySelectorAll('#timeline .tl-item');
+      let activeItem = null;
+    
+      items.forEach(item => item.classList.remove('current'));
+    
+      items.forEach(item => {
+        const utc = item.dataset.utc;
+        const offset = item.dataset.offset;
+    
+        let eventTime = null;
+    
+        if (utc) {
+          eventTime = new Date(utc).getTime();
+        } else if (offset) {
+          eventTime = LIFTOFF + Number(offset) * 1000;
+        }
+    
+        if (!eventTime) return;
+    
+        // Find the most recent event that has passed
+        if (now >= eventTime) {
+          activeItem = item;
+        }
+      });
+    
+      if (activeItem) {
+        activeItem.classList.add('current');
+      }
+    }
+    highlightCurrentEvent(now);
     tick();
     setInterval(tick, 1000);
   </script>
