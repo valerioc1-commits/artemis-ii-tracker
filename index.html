@@ -352,32 +352,6 @@
       padding-top: 1rem;
       border-top: 0.5px solid var(--border);
     }
-        /* Highlight the current event */
-    .tl-item.current .tl-title {
-      font-weight: 600;
-      color: var(--blue);
-    }
-    
-    .tl-item.current .tl-dot {
-      box-shadow: 0 0 10px var(--blue), 0 0 20px var(--blue);
-      background: var(--blue);
-    }
-    
-    .tl-item.current .tl-time {
-      color: var(--blue-text);
-      font-weight: 500;
-    }
-    
-    /* Soft pulse for the active event */
-    @keyframes pulseGlow {
-      0%   { box-shadow: 0 0 6px var(--blue); }
-      50%  { box-shadow: 0 0 14px var(--blue); }
-      100% { box-shadow: 0 0 6px var(--blue); }
-    }
-    
-    .tl-item.current .tl-dot {
-      animation: pulseGlow 1.6s infinite;
-    }
   </style>
 </head>
 <body>
@@ -440,124 +414,58 @@
       <div class="card">
         <p class="section-label">Launch day timeline</p>
         <ul class="timeline" id="timeline">
-  
-          <!-- Crew wake-up (not officially timestamped, so marked as approximate) -->
-          <li class="tl-item" data-utc="">
+          <li class="tl-item">
             <div class="tl-marker"><div class="tl-dot done"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">Crew wake-up & breakfast</p>
-              <p class="tl-time">Approx. morning</p>
-            </div>
+            <div><p class="tl-title">Crew wake-up &amp; breakfast</p><p class="tl-time">~9:45 AM ET</p></div>
           </li>
-    
-          <!-- LH2 fueling start (approximate, no published exact UTC) -->
-          <li class="tl-item" data-utc="">
+          <li class="tl-item">
             <div class="tl-marker"><div class="tl-dot done"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">LH2 fueling (core stage)</p>
-              <p class="tl-time">Fueling underway</p>
-            </div>
+            <div><p class="tl-title">LH2 fueling (core stage)</p><p class="tl-time">~10:35 AM ET</p></div>
           </li>
-    
-          <!-- LH2 replenish (ongoing) -->
-          <li class="tl-item" data-utc="">
+          <li class="tl-item">
             <div class="tl-marker"><div class="tl-dot done"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">LH2 replenish started</p>
-              <p class="tl-time">Final fueling phase · ongoing</p>
-            </div>
+            <div><p class="tl-title">LH2 replenish started</p><p class="tl-time">Final fueling phase · ongoing</p></div>
           </li>
-    
-          <!-- Crew suit-up (corrected: 1:15 PM ET = 17:15 UTC) -->
-          <li class="tl-item" data-utc="2025-03-XXT17:15:00Z" id="event-suit">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">Crew suit-up</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item" id="tl-suit">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-suit"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-suit">Crew suit-up</p><p class="tl-time">~2:30 PM ET</p></div>
           </li>
-    
-          <!-- Crew walkout (corrected: ~2:14 PM ET = 18:14 UTC) -->
-          <li class="tl-item" data-utc="2025-03-XXT18:14:00Z" id="event-walkout">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">Crew walkout & transport</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-walkout"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-walkout">Crew walkout &amp; transport</p><p class="tl-time">~3:30 PM ET</p></div>
           </li>
-    
-          <!-- Crew ingress (corrected: ~2:24 PM ET = 18:24 UTC) -->
-          <li class="tl-item" data-utc="2025-03-XXT18:24:00Z" id="event-ingress">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">Crew ingress into Orion</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-ingress"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-ingress">Crew ingress into Orion</p><p class="tl-time">~4:00 PM ET</p></div>
           </li>
-    
-          <!-- T-10 minute hold (correct: 6:14 PM ET = 22:14 UTC) -->
-          <li class="tl-item" data-utc="2025-03-XXT22:14:00Z" id="event-hold">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">T‑10 minute hold</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-hold"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-hold">T-10 min hold</p><p class="tl-time">~6:14 PM ET</p></div>
           </li>
-    
-          <!-- Liftoff (fixed: 6:24 PM ET = 22:24 UTC) -->
-          <li class="tl-item" data-utc="2025-03-XXT22:24:00Z" id="event-liftoff">
-            <div class="tl-marker"><div class="tl-dot liftoff"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title liftoff-label">LIFTOFF</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot liftoff" id="dot-liftoff"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title liftoff-label">LIFTOFF</p><p class="tl-time">6:24 PM ET</p></div>
           </li>
-    
-          <!-- Max-Q (T+1:08) -->
-          <li class="tl-item" data-offset="68" id="event-maxq">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">Max‑Q</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-maxq"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-maxq">Max-Q</p><p class="tl-time">T+~1 min 8 sec</p></div>
           </li>
-    
-          <!-- SRB sep (T+2:11) -->
-          <li class="tl-item" data-offset="131" id="event-srb">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">SRB separation</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-srb"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-srb">SRB separation</p><p class="tl-time">T+~2 min 11 sec</p></div>
           </li>
-    
-          <!-- Core stage sep (T+8:22) -->
-          <li class="tl-item" data-offset="502" id="event-core">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">Core stage separation</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-core"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-core">Core stage separation</p><p class="tl-time">T+~8 min 22 sec</p></div>
           </li>
-    
-          <!-- ICPS burn (T+17 min) -->
-          <li class="tl-item" data-offset="1020" id="event-orbit">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div><div class="tl-line"></div></div>
-            <div>
-              <p class="tl-title">ICPS burn → high Earth orbit</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-orbit"></div><div class="tl-line"></div></div>
+            <div><p class="tl-title muted" id="lbl-orbit">ICPS burn → high Earth orbit</p><p class="tl-time">T+~17 min</p></div>
           </li>
-    
-          <!-- TLI (T+1 hr 38 min) -->
-          <li class="tl-item" data-offset="5880" id="event-tli">
-            <div class="tl-marker"><div class="tl-dot upcoming"></div></div>
-            <div>
-              <p class="tl-title">Trans‑lunar injection burn</p>
-              <p class="tl-time local-time"></p>
-            </div>
+          <li class="tl-item">
+            <div class="tl-marker"><div class="tl-dot upcoming" id="dot-tli"></div></div>
+            <div><p class="tl-title muted" id="lbl-tli">Trans-lunar injection burn</p><p class="tl-time">T+~1 hr 38 min</p></div>
           </li>
-    
         </ul>
       </div>
 
@@ -761,37 +669,7 @@
       document.getElementById('dist-bar').style.width = pct + '%';
       document.getElementById('dist-speed').textContent = diff > 0 ? '-- mph' : commas(speed) + ' mph';
     }
-    function highlightCurrentEvent(now) {
-      const items = document.querySelectorAll('#timeline .tl-item');
-      let activeItem = null;
-    
-      items.forEach(item => item.classList.remove('current'));
-    
-      items.forEach(item => {
-        const utc = item.dataset.utc;
-        const offset = item.dataset.offset;
-    
-        let eventTime = null;
-    
-        if (utc) {
-          eventTime = new Date(utc).getTime();
-        } else if (offset) {
-          eventTime = LIFTOFF + Number(offset) * 1000;
-        }
-    
-        if (!eventTime) return;
-    
-        // Find the most recent event that has passed
-        if (now >= eventTime) {
-          activeItem = item;
-        }
-      });
-    
-      if (activeItem) {
-        activeItem.classList.add('current');
-      }
-    }
-    highlightCurrentEvent(now);
+
     tick();
     setInterval(tick, 1000);
   </script>
